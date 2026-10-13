@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Eldo Carmo Barber Shop — A melhor experiência de barbearia em Luanda. Cortes premium, mini-bar e Chocolate Scookiie.">
+  <title>Eldo Carmo Barber Shop | Luanda</title>
+  
+  <link rel="preload" href="assets/images/hero.webp" as="image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/images/eldocarmologo.webp" type="image/webp">
+</head>
+<body>
+  <!-- ========== ANNOUNCEMENT BAR ========== -->
+  <a class="announce-bar" href="https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC" target="_blank" rel="noopener">
+    Já disponível — música <strong>Tá Queimar</strong> 🔥🔥🔥 · Ouvir no YouTube
+  </a>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" type="button">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+
+      <a href="index.html" class="header__logo">
+        <span class="header__logo-name">Eldo Carmo Barbershop</span>
+        <span class="header__logo-sub">Johnny Berry</span>
+      </a>
+
+      <div class="header__actions">
+        <a href="#agendar" class="btn btn--header-cta header__cta">Agendar</a>
+        <button class="cart-btn" id="cart-btn" aria-label="Carrinho" type="button">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-btn__count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="header__nav" aria-label="Menu principal">
+      <a href="index.html" class="header__nav-link">Início</a>
+      <a href="#servicos" class="header__nav-link">Serviços</a>
+      <a href="minibar.html" class="header__nav-link">Mini-Bar</a>
+      <div class="header__nav-item header__nav-item--discover">
+        <button type="button" class="header__nav-link header__nav-discover-trigger" aria-expanded="false" aria-haspopup="true">
+          Discovery
+        </button>
+        <div class="header__discover-dropdown" role="menu">
+          <p class="header__discover-label">Johnny Berry — Tá Queimar</p>
+          <ul class="header__discover-music">
+            <li>
+              <a href="https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/youtube.webp" alt="" width="88" height="28">
+                <span>YouTube</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://open.spotify.com/album/7LO9kumBSe1za71O5oKOjZ?si=1&nd=1&dlsi=8021751f937340e2" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/spotify.webp" alt="" width="88" height="28">
+                <span>Spotify</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://music.apple.com/us/album/t%C3%A1-queimar-feat-young-k-varox-007-single/6788576000" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/apple-music.webp" alt="" width="28" height="28">
+                <span>Apple Music</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.deezer.com/us/album/1023440431" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/deezer.webp" alt="" width="88" height="28">
+                <span>Deezer</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/results?search_query=Johnny+Berry+T%C3%A1+Queimar" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/youtube-music.webp" alt="" width="100" height="28">
+                <span>YouTube Music</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <a href="https://eldocarmo.workersdevao.workers.dev" class="header__nav-link" target="_blank" rel="noopener">Portal</a>
+    </nav>
+  </header>
+
+  <!-- ========== LEFT MENU DRAWER ========== -->
+  <div class="menu-drawer" id="menu-drawer" aria-hidden="true">
+    <div class="menu-drawer__overlay" id="menu-overlay"></div>
+    <aside class="menu-drawer__panel" role="dialog" aria-label="Menu">
+      <div class="menu-drawer__head">
+        <span class="menu-drawer__brand">Eldo Carmo Barbershop</span>
+        <button class="menu-drawer__close" id="menu-close" aria-label="Fechar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="menu-drawer__nav" aria-label="Menu principal">
+        <a href="index.html" class="menu-drawer__link">Início</a>
+        <a href="#servicos" class="menu-drawer__link">Serviços</a>
+        <a href="minibar.html" class="menu-drawer__link">Mini-Bar</a>
+        <a href="https://eldocarmo.workersdevao.workers.dev" class="menu-drawer__link" target="_blank" rel="noopener">Portal</a>
+      </nav>
+
+      <div class="menu-drawer__discover">
+        <p class="menu-drawer__discover-title">Discovery</p>
+        <p class="menu-drawer__discover-sub">Johnny Berry — Tá Queimar</p>
+        <ul class="menu-drawer__music">
+          <li>
+            <a href="https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC" target="_blank" rel="noopener">
+              <img src="assets/icons/youtube.webp" alt="" width="88" height="28">
+              <span>YouTube</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://open.spotify.com/album/7LO9kumBSe1za71O5oKOjZ?si=1&nd=1&dlsi=8021751f937340e2" target="_blank" rel="noopener">
+              <img src="assets/icons/spotify.webp" alt="" width="88" height="28">
+              <span>Spotify</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://music.apple.com/us/album/t%C3%A1-queimar-feat-young-k-varox-007-single/6788576000" target="_blank" rel="noopener">
+              <img src="assets/icons/apple-music.webp" alt="" width="28" height="28">
+              <span>Apple Music</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.deezer.com/us/album/1023440431" target="_blank" rel="noopener">
+              <img src="assets/icons/deezer.webp" alt="" width="88" height="28">
+              <span>Deezer</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/results?search_query=Johnny+Berry+T%C3%A1+Queimar" target="_blank" rel="noopener">
+              <img src="assets/icons/youtube-music.webp" alt="" width="100" height="28">
+              <span>YouTube Music</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="menu-drawer__cta">
+        <a href="#agendar" class="btn btn--primary btn--full menu-drawer__agendar">Agendar sessão</a>
+      </div>
+    </aside>
+  </div>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="hero__media" aria-hidden="true">
+      <img class="hero__still" id="hero-still" src="assets/images/hero.webp" alt="" data-hero-slide="0">
+      <video class="hero__video" id="hero-video-1" muted playsinline preload="auto" poster="assets/images/hero.webp" data-hero-slide="1">
+        <source src="assets/videos/hero.mp4" type="video/mp4">
+      </video>
+      <div class="hero__overlay"></div>
+    </div>
+    <div class="hero__content container">
+      <p class="hero__eyebrow">Luanda · V17 Kilamba</p>
+      <h1 class="hero__title">Chegue.<br>Saia impecável.</h1>
+      <p class="hero__subtitle">Cortes premium, ambiente exclusivo e a experiência Eldo Carmo.</p>
+      <div class="hero__ctas">
+        <a href="#agendar" class="btn btn--primary">Agendar sessão</a>
+        <a href="#servicos" class="btn btn--ghost hero__btn-ghost">Ver Serviços</a>
+      </div>
+    </div>
+    <div class="hero__dots" role="tablist" aria-label="Conteúdo do hero">
+      <button type="button" class="hero__dot is-active" data-hero-go="0" aria-label="Foto 1"></button>
+      <button type="button" class="hero__dot" data-hero-go="1" aria-label="Vídeo 1"></button>
+    </div>
+    <a href="#servicos" class="hero__scroll" aria-label="Descer para serviços">
+      <span class="hero__scroll-label">Descubra</span>
+      <span class="hero__scroll-line" aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <!-- ========== MANIFESTO ========== -->
+  <section class="section section--manifesto" id="manifesto">
+    <div class="container">
+      <blockquote class="manifesto">
+        <p class="manifesto__quote">O seu estilo, com a precisão que ele merece.</p>
+        <footer class="manifesto__attr">— Eldo Carmo</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ========== SERVICES ========== -->
+  <section class="section" id="servicos">
+    <div class="container">
+      <header class="section__header">
+        <p class="section__eyebrow">O que fazemos</p>
+        <h2 class="section__title">Serviços</h2>
+        <div class="section__line"></div>
+      </header>
+
+      <div class="services-grid">
+        <article class="service-card" data-service="Corte Clássico">
+          <div class="service-card__image">
+            <img src="assets/images/service-classico.webp" alt="Corte Clássico" loading="lazy">
+          </div>
+          <div class="service-card__overlay">
+            <h3 class="service-card__title">Corte Clássico</h3>
+            <p class="service-card__desc">Corte tradicional com acabamento preciso e atenção aos detalhes.</p>
+            <p class="service-card__price">A partir de 2.500 Kz</p>
+            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
+          </div>
+        </article>
+
+        <article class="service-card" data-service="Corte + Barba">
+          <div class="service-card__image">
+            <img src="assets/images/service-corte-barba.webp" alt="Corte + Barba" loading="lazy">
+          </div>
+          <div class="service-card__overlay">
+            <h3 class="service-card__title">Corte + Barba</h3>
+            <p class="service-card__desc">Combinação completa para um visual impecável e bem cuidado.</p>
+            <p class="service-card__price">A partir de 4.000 Kz</p>
+            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
+          </div>
+        </article>
+
+        <article class="service-card" data-service="Fade / Degradê">
+          <div class="service-card__image">
+            <img src="assets/images/service-fade.webp" alt="Fade / Degradê" loading="lazy">
+          </div>
+          <div class="service-card__overlay">
+            <h3 class="service-card__title">Fade / Degradê</h3>
+            <p class="service-card__desc">Transições suaves e modernas, do baixo ao médio e alto fade.</p>
+            <p class="service-card__price">A partir de 3.000 Kz</p>
+            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
+          </div>
+        </article>
+
+        <article class="service-card" data-service="Design & Desenhos">
+          <div class="service-card__image">
+            <img src="assets/images/service-design.webp" alt="Design & Desenhos" loading="lazy">
+          </div>
+          <div class="service-card__overlay">
+            <h3 class="service-card__title">Design & Desenhos</h3>
+            <p class="service-card__desc">Linhas, padrões e arte no cabelo com precisão artística.</p>
+            <p class="service-card__price">A partir de 3.000 Kz</p>
+            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
+          </div>
+        </article>
+
+        <article class="service-card" data-service="Tranças & Twists">
+          <div class="service-card__image">
+            <img src="assets/images/service-trancas.webp" alt="Tranças & Twists" loading="lazy">
+          </div>
+          <div class="service-card__overlay">
+            <h3 class="service-card__title">Tranças & Twists</h3>
+            <p class="service-card__desc">Estilos protegidos e elegantes para todas as idades.</p>
+            <p class="service-card__price">Consultar</p>
+            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
+          </div>
+        </article>
+
+        <article class="service-card" data-service="Barboterapia">
+          <div class="service-card__image">
+            <img src="assets/images/service-barba.webp" alt="Barboterapia" loading="lazy">
+          </div>
+          <div class="service-card__overlay">
+            <h3 class="service-card__title">Barboterapia</h3>
+            <p class="service-card__desc">Tratamento completo de barba com toalha quente e produtos premium.</p>
+            <p class="service-card__price">A partir de 2.000 Kz</p>
+            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
+          </div>
+        </article>
+      </div>
+
+      <p class="section__note">* Preços sujeitos a confirmação. Contacte-nos para o valor exacto.</p>
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCE ========== -->
+  <section class="section section--experience" id="experiencia">
+    <div class="container">
+      <header class="section__header">
+        <p class="section__eyebrow">Por dentro</p>
+        <h2 class="section__title">A Experiência Eldo Carmo</h2>
+        <div class="section__line"></div>
+      </header>
+    </div>
+
+    <div class="experience-wrap">
+      <button type="button" class="experience-nav experience-nav--prev" id="experience-prev" aria-label="Anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+
+      <div class="experience-track" id="experience-track">
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-ambiente.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-ambiente.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Ambiente</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-reabertura.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-reabertura.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Reabertura</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-corte.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-corte.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Corte</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-transformacao.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-transformacao.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Transformação</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-detalhe.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-detalhe.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Detalhe</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-luxo.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-luxo.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Experiência</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-barba.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-barba.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Barba</p>
+          </div>
+        </article>
+      </div>
+
+      <button type="button" class="experience-nav experience-nav--next" id="experience-next" aria-label="Seguinte">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div class="experience-dots" id="experience-dots" role="tablist" aria-label="Vídeos da experiência"></div>
+  </section>
+
+  <!-- ========== PRODUCTS / MINI-BAR ========== -->
+  <section class="section section--alt" id="produtos">
+    <div class="container">
+      <header class="section__header">
+        <p class="section__eyebrow">No espaço</p>
+        <h2 class="section__title">Mini-Bar</h2>
+        <div class="section__line"></div>
+        <p class="section__intro">Snacks, cocktails e bebidas — incluindo Chocolate Scookiie.</p>
+      </header>
+
+      <a href="minibar.html" class="minibar-card">
+        <img class="minibar-card__img" src="assets/images/minibar-card.webp" alt="Chocolate Scookiie Ginguba — Eldo Carmo Mini-Bar" loading="lazy">
+        <div class="minibar-card__overlay">
+          <span class="minibar-card__eyebrow">Scookiie · Ginguba</span>
+          <span class="minibar-card__btn">Ver Mini-Bar</span>
+        </div>
+      </a>
+      <div class="section__cta-wrap">
+        <a href="minibar.html" class="btn btn--ghost">Ver todos os produtos</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GALLERY TEASER ========== -->
+  <section class="section" id="galeria">
+    <div class="container">
+      <header class="section__header">
+        <p class="section__eyebrow">Trabalhos</p>
+        <h2 class="section__title">Galeria</h2>
+        <div class="section__line"></div>
+      </header>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="assets/images/gallery-01.webp" alt="Corte cacheado loiro — Eldo Carmo Barber Shop" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/gallery-02.webp" alt="Fade com cabelo cacheado loiro" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/gallery-03.webp" alt="Corte infantil com design" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/gallery-04.webp" alt="Cliente e barbeiro — agora tu" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/gallery-05.webp" alt="Corte platinado Eldo Carmo" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/gallery-06.webp" alt="Johnny Berry no espaço Eldo Carmo" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="assets/images/gallery-07.webp" alt="Tranças e acabamento de barba" loading="lazy">
+        </div>
+      </div>
+
+      <div class="section__cta-wrap">
+        <a href="https://www.instagram.com/eldo_carmo/" class="btn btn--ghost" target="_blank" rel="noopener">
+          Ver mais no Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LUBANGO ========== -->
+  <section class="section section--lubango" id="lubango">
+    <div class="lubango-hero">
+      <img class="lubango-hero__img" src="assets/images/lubango.webp" alt="Letras LUBANGO iluminadas — marco da cidade" loading="lazy">
+      <div class="lubango-hero__gradient"></div>
+      <div class="lubango-hero__content">
+        <p class="lubango-hero__eyebrow">Expansão</p>
+        <h2 class="lubango-hero__title">Lubango — Estamos a chegar</h2>
+        <p class="lubango-hero__text">A Eldo Carmo está a reforçar a sua equipa no Lubango e quer contar contigo.</p>
+
+        <div class="lubango-roles">
+          <span>Barbeiros</span>
+          <span>Barmans</span>
+          <span>Técnicos de Unhas</span>
+          <span>Atendimento ao Público</span>
+        </div>
+
+        <p class="lubango-location">
+          <strong>Local:</strong> Bairro Lucrécia, Rua da Alma<br>
+          (antigo Emolube / Impolube) · Lubango
+        </p>
+
+        <p class="lubango-contact">
+          <strong>Candidaturas:</strong> recrutamento.eldocarmo@gmail.com<br>
+          <strong>WhatsApp:</strong> 924 071 971
+        </p>
+
+        <a href="https://wa.me/244924071971?text=Olá! Tenho interesse em candidatar-me para a equipa Eldo Carmo no Lubango." class="btn btn--primary" target="_blank" rel="noopener">
+          Candidatar-me
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TRUST ========== -->
+  <section class="section section--trust" aria-label="Confiança">
+    <div class="container">
+      <div class="trust-strip">
+        <div class="trust-item">
+          <span class="trust-item__value">V17</span>
+          <span class="trust-item__label">Kilamba · Luanda</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-item__value">07–22h</span>
+          <span class="trust-item__label">Segunda a Domingo</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-item__value">Premium</span>
+          <span class="trust-item__label">Cortes &amp; experiência</span>
+        </div>
+        <a class="trust-item trust-item--link" href="https://www.instagram.com/eldo_carmo/" target="_blank" rel="noopener">
+          <span class="trust-item__value">@eldo_carmo</span>
+          <span class="trust-item__label">Instagram</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AGENDAR ========== -->
+  <section class="section section--alt" id="agendar">
+    <div class="container">
+      <header class="section__header">
+        <p class="section__eyebrow">Reserve o seu lugar</p>
+        <h2 class="section__title">Agendar Sessão</h2>
+        <div class="section__line"></div>
+        <p class="section__intro">Centralidade do Kilamba, V17 · WhatsApp +244 923 929 074</p>
+      </header>
+
+      <div class="contact-grid">
+        <form class="contact-form" id="booking-form">
+          <div class="form-group">
+            <label for="bk-name">Nome *</label>
+            <input type="text" id="bk-name" name="name" required placeholder="O seu nome">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bk-phone">Telefone <span class="optional">(opcional)</span></label>
+              <input type="tel" id="bk-phone" name="phone" placeholder="9XX XXX XXX">
+            </div>
+            <div class="form-group">
+              <label for="bk-people">Nº de pessoas <span class="optional">(opcional)</span></label>
+              <input type="number" id="bk-people" name="people" min="1" max="20" placeholder="1">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bk-service">Serviço desejado *</label>
+            <select id="bk-service" name="service" required>
+              <option value="" disabled selected>Seleccione um serviço</option>
+              <option value="Corte Clássico">Corte Clássico</option>
+              <option value="Corte + Barba">Corte + Barba</option>
+              <option value="Fade / Degradê">Fade / Degradê</option>
+              <option value="Design & Desenhos">Design & Desenhos</option>
+              <option value="Tranças & Twists">Tranças & Twists</option>
+              <option value="Barboterapia">Barboterapia</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bk-date">Data *</label>
+              <input type="date" id="bk-date" name="date" required>
+            </div>
+            <div class="form-group">
+              <label for="bk-time">Hora *</label>
+              <input type="time" id="bk-time" name="time" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bk-message">Mensagem <span class="optional">(opcional)</span></label>
+            <textarea id="bk-message" name="message" rows="3" placeholder="Alguma preferência ou nota?"></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Agendar via WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img src="assets/images/eldocarmologo.webp" alt="Eldo Carmo" width="40" height="40">
+        <span>Eldo Carmo Empreendimentos</span>
+      </div>
+      <div class="footer__contact">
+        <a href="https://wa.me/244923929074" target="_blank" rel="noopener">+244 923 929 074</a>
+        <span class="footer__sep">·</span>
+        <span>Centralidade do Kilamba, V17 · Luanda</span>
+        <span class="footer__sep">·</span>
+        <span>Seg – Dom · 07:00 – 22:00</span>
+      </div>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/eldo_carmo/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="https://www.facebook.com/EldoCarmoBeleza" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/>
+          </svg>
+        </a>
+      </div>
+      <p class="footer__copy">© 2026 Eldo Carmo. Todos os direitos reservados.</p>
+      <a href="https://eldocarmo.workersdevao.workers.dev" class="footer__link">Portal Eldo Carmo</a>
+    </div>
+  </footer>
+
+  <!-- ========== CART DRAWER ========== -->
+  <div class="cart-drawer" id="cart-drawer" aria-hidden="true">
+    <div class="cart-drawer__overlay" id="cart-overlay"></div>
+    <div class="cart-drawer__panel">
+      <header class="cart-drawer__header">
+        <h2>Carrinho</h2>
+        <button class="cart-drawer__close" id="cart-close" aria-label="Fechar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </header>
+      <div class="cart-drawer__body" id="cart-items">
+        <div class="cart-empty">
+          <p class="cart-empty__title">O carrinho está vazio</p>
+          <p class="cart-empty__text">Explore o Mini-Bar e adicione snacks ou bebidas.</p>
+          <a href="minibar.html" class="btn btn--ghost btn--small">Ver Mini-Bar</a>
+        </div>
+      </div>
+      <footer class="cart-drawer__footer">
+        <div class="cart-total">
+          <span>Total</span>
+          <strong id="cart-total">0 Kz</strong>
+        </div>
+        <a class="btn btn--primary btn--full is-disabled" id="checkout-btn" href="checkout.html" aria-disabled="true">
+          Finalizar pedido
+        </a>
+        <button type="button" class="btn btn--ghost btn--full cart-clear" id="cart-clear" disabled>
+          Limpar carrinho
+        </button>
+
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

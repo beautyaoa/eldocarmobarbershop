@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Checkout — Eldo Carmo Mini-Bar. Confirme o seu pedido e envie via WhatsApp.">
+  <title>Checkout | Eldo Carmo Mini-Bar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/images/eldocarmologo.webp" type="image/webp">
+</head>
+<body>
+  <a class="announce-bar" href="https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC" target="_blank" rel="noopener">
+    Já disponível — música <strong>Tá Queimar</strong> 🔥🔥🔥 · Ouvir no YouTube
+  </a>
+
+  <header class="header header--solid" id="header">
+    <div class="container header__inner">
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" type="button">
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+
+      <a href="index.html" class="header__logo">
+        <span class="header__logo-name">Eldo Carmo Barbershop</span>
+        <span class="header__logo-sub">Johnny Berry</span>
+      </a>
+
+      <div class="header__actions">
+        <a href="index.html#agendar" class="btn btn--header-cta header__cta">Agendar</a>
+        <button class="cart-btn" id="cart-btn" aria-label="Carrinho" type="button">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-btn__count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="header__nav" aria-label="Menu principal">
+      <a href="index.html" class="header__nav-link">Início</a>
+      <a href="index.html#servicos" class="header__nav-link">Serviços</a>
+      <a href="minibar.html" class="header__nav-link">Mini-Bar</a>
+      <a href="index.html#lubango" class="header__nav-link">Lubango</a>
+      <div class="header__nav-item header__nav-item--discover">
+        <button type="button" class="header__nav-link header__nav-discover-trigger" aria-expanded="false" aria-haspopup="true">
+          Discovery
+        </button>
+        <div class="header__discover-dropdown" role="menu">
+          <p class="header__discover-label">Johnny Berry — Tá Queimar</p>
+          <ul class="header__discover-music">
+            <li>
+              <a href="https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/youtube.webp" alt="" width="88" height="28">
+                <span>YouTube</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://open.spotify.com/album/7LO9kumBSe1za71O5oKOjZ?si=1&nd=1&dlsi=8021751f937340e2" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/spotify.webp" alt="" width="88" height="28">
+                <span>Spotify</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://music.apple.com/us/album/t%C3%A1-queimar-feat-young-k-varox-007-single/6788576000" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/apple-music.webp" alt="" width="28" height="28">
+                <span>Apple Music</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.deezer.com/us/album/1023440431" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/deezer.webp" alt="" width="88" height="28">
+                <span>Deezer</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/results?search_query=Johnny+Berry+T%C3%A1+Queimar" target="_blank" rel="noopener" role="menuitem">
+                <img src="assets/icons/youtube-music.webp" alt="" width="100" height="28">
+                <span>YouTube Music</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <a href="https://eldocarmo.workersdevao.workers.dev" class="header__nav-link" target="_blank" rel="noopener">Portal</a>
+    </nav>
+  </header>
+
+  <div class="menu-drawer" id="menu-drawer" aria-hidden="true">
+    <div class="menu-drawer__overlay" id="menu-overlay"></div>
+    <aside class="menu-drawer__panel" role="dialog" aria-label="Menu">
+      <div class="menu-drawer__head">
+        <span class="menu-drawer__brand">Eldo Carmo Barbershop</span>
+        <button class="menu-drawer__close" id="menu-close" aria-label="Fechar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="menu-drawer__nav" aria-label="Menu principal">
+        <a href="index.html" class="menu-drawer__link">Início</a>
+        <a href="index.html#servicos" class="menu-drawer__link">Serviços</a>
+        <a href="minibar.html" class="menu-drawer__link">Mini-Bar</a>
+        <a href="index.html#lubango" class="menu-drawer__link">Lubango</a>
+        <a href="https://eldocarmo.workersdevao.workers.dev" class="menu-drawer__link" target="_blank" rel="noopener">Portal</a>
+      </nav>
+
+      <div class="menu-drawer__discover">
+        <p class="menu-drawer__discover-title">Discovery</p>
+        <p class="menu-drawer__discover-sub">Johnny Berry — Tá Queimar</p>
+        <ul class="menu-drawer__music">
+          <li>
+            <a href="https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC" target="_blank" rel="noopener">
+              <img src="assets/icons/youtube.webp" alt="" width="88" height="28">
+              <span>YouTube</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://open.spotify.com/album/7LO9kumBSe1za71O5oKOjZ?si=1&nd=1&dlsi=8021751f937340e2" target="_blank" rel="noopener">
+              <img src="assets/icons/spotify.webp" alt="" width="88" height="28">
+              <span>Spotify</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://music.apple.com/us/album/t%C3%A1-queimar-feat-young-k-varox-007-single/6788576000" target="_blank" rel="noopener">
+              <img src="assets/icons/apple-music.webp" alt="" width="28" height="28">
+              <span>Apple Music</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.deezer.com/us/album/1023440431" target="_blank" rel="noopener">
+              <img src="assets/icons/deezer.webp" alt="" width="88" height="28">
+              <span>Deezer</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/results?search_query=Johnny+Berry+T%C3%A1+Queimar" target="_blank" rel="noopener">
+              <img src="assets/icons/youtube-music.webp" alt="" width="100" height="28">
+              <span>YouTube Music</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="menu-drawer__cta">
+        <a href="index.html#agendar" class="btn btn--primary btn--full menu-drawer__agendar">Agendar sessão</a>
+      </div>
+    </aside>
+  </div>
+
+  <main>
+    <section class="section checkout-page">
+      <div class="container">
+        <header class="section__header checkout-page__header">
+          <p class="section__eyebrow">Mini-Bar</p>
+          <h1 class="section__title">Checkout</h1>
+          <div class="section__line"></div>
+          <p class="section__intro">Confirme o pedido e os seus dados. A encomenda será enviada por WhatsApp.</p>
+        </header>
+
+        <!-- Empty state -->
+        <div class="checkout-empty" id="checkout-empty" hidden>
+          <p>O carrinho está vazio.</p>
+          <a href="minibar.html" class="btn btn--primary">Ver Mini-Bar</a>
+        </div>
+
+        <div class="checkout-layout" id="checkout-layout">
+          <!-- Order summary -->
+          <div class="checkout-summary">
+            <h2 class="checkout-summary__title">O seu pedido</h2>
+            <div class="checkout-items" id="checkout-items">
+              <!-- filled by JS -->
+            </div>
+            <div class="checkout-summary__total">
+              <span>Total</span>
+              <strong id="checkout-total">0 Kz</strong>
+            </div>
+            <a href="minibar.html" class="checkout-summary__back">← Continuar a comprar</a>
+          </div>
+
+          <!-- Customer form -->
+          <form class="checkout-form contact-form" id="checkout-form" novalidate>
+            <h2 class="checkout-form__title">Os seus dados</h2>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="co-name">Nome *</label>
+                <input type="text" id="co-name" name="name" required autocomplete="name" placeholder="O seu nome">
+              </div>
+              <div class="form-group">
+                <label for="co-phone">Telefone / WhatsApp *</label>
+                <input type="tel" id="co-phone" name="phone" required autocomplete="tel" placeholder="9XX XXX XXX" inputmode="tel">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="co-pickup">Entrega / levantamento</label>
+              <select id="co-pickup" name="pickup">
+                <option value="levantamento">Levantamento no V17 (Kilamba)</option>
+                <option value="entrega">Entrega (combinar no WhatsApp)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="co-notes">Notas <span class="optional">(opcional)</span></label>
+              <textarea id="co-notes" name="notes" rows="3" placeholder="Ex.: hora de levantamento, preferências…"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full" id="checkout-submit">
+              Encomendar via WhatsApp
+            </button>
+            <p class="checkout-form__hint">Será aberta uma conversa no WhatsApp com o pedido pré-preenchido.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <img src="assets/images/eldocarmologo.webp" alt="Eldo Carmo" width="40" height="40">
+        <span>Eldo Carmo Empreendimentos</span>
+      </div>
+      <div class="footer__contact">
+        <a href="https://wa.me/244923929074" target="_blank" rel="noopener">+244 923 929 074</a>
+        <span class="footer__sep">·</span>
+        <span>Centralidade do Kilamba, V17 · Luanda</span>
+        <span class="footer__sep">·</span>
+        <span>Seg – Dom · 07:00 – 22:00</span>
+      </div>
+      <p class="footer__copy">© 2026 Eldo Carmo. Todos os direitos reservados.</p>
+      <a href="minibar.html" class="footer__link">← Mini-Bar</a>
+    </div>
+  </footer>
+
+  <div class="cart-drawer" id="cart-drawer" aria-hidden="true">
+    <div class="cart-drawer__overlay" id="cart-overlay"></div>
+    <div class="cart-drawer__panel">
+      <header class="cart-drawer__header">
+        <h2>Carrinho</h2>
+        <button class="cart-drawer__close" id="cart-close" aria-label="Fechar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </header>
+      <div class="cart-drawer__body" id="cart-items">
+        <div class="cart-empty">
+          <p class="cart-empty__title">O carrinho está vazio</p>
+          <p class="cart-empty__text">Explore o Mini-Bar e adicione snacks ou bebidas.</p>
+          <a href="minibar.html" class="btn btn--ghost btn--small">Ver Mini-Bar</a>
+        </div>
+      </div>
+      <footer class="cart-drawer__footer">
+        <div class="cart-total">
+          <span>Total</span>
+          <strong id="cart-total">0 Kz</strong>
+        </div>
+        <a class="btn btn--primary btn--full" id="checkout-btn" href="checkout.html" aria-disabled="true">
+          Finalizar pedido
+        </a>
+        <button type="button" class="btn btn--ghost btn--full cart-clear" id="cart-clear" disabled>
+          Limpar carrinho
+        </button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
