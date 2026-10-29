@@ -20,7 +20,147 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- State ----------
   let cart = JSON.parse(localStorage.getItem('eldocarmo_cart') || '[]');
 
-  // ---------- Hero: static image only (video files not yet available) ----------
+  /* ——— CMS: load published catalog and apply texts / services / gallery ——— */
+  async function loadAndApplyCms() {
+    const defaults = window.ECBARBER_DEFAULTS || {};
+    let catalog = defaults;
+    const cfg = window.ECBARBER_CONFIG;
+    if (cfg && cfg.catalogUrl) {
+      try {
+        const res = await fetch(cfg.catalogUrl + '?t=' + Date.now());
+        if (res.ok) {
+          const remote = await res.json();
+          catalog = {
+            ...defaults,
+            ...remote,
+            services: Array.isArray(remote.services) ? remote.services : defaults.services,
+            gallery: Array.isArray(remote.gallery) ? remote.gallery : defaults.gallery,
+            site: { ...(defaults.site || {}), ...(remote.site || {}) }
+          };
+        }
+      } catch (_) {}
+    }
+    applySiteContent(catalog.site || defaults.site || {});
+    renderServices(catalog.services || defaults.services || []);
+    renderGallery(catalog.gallery || defaults.gallery || []);
+    // Populate booking form service select
+    const select = document.getElementById('service');
+    if (select && Array.isArray(catalog.services)) {
+      const active = catalog.services.filter((s) => s.active !== false).sort((a, b) => (a.order || 0) - (b.order || 0));
+      if (active.length) {
+        const current = select.value;
+        select.innerHTML =
+          '<option value="">Seleccione o serviço</option>' +
+          active.map((s) => `<option value="${s.name}">${s.name}</option>`).join('');
+        if (current) select.value = current;
+      }
+    }
+  }
+
+  function applySiteContent(site) {
+    if (!site) return;
+    const setText = (key, html) => {
+      document.querySelectorAll(`[data-cms="${key}"]`).forEach((el) => {
+        if (el.tagName === 'IMG') {
+          if (site[key]) el.src = site[key];
+          return;
+        }
+        if (html) el.innerHTML = String(site[key] || '').replace(/\n/g, '<br>');
+        else el.textContent = site[key] || el.textContent;
+      });
+    };
+    setText('heroEyebrow');
+    setText('heroTitle', true);
+    setText('heroSubtitle');
+    setText('heroImage');
+    setText('manifestoQuote');
+    setText('manifestoAttr');
+    setText('servicesEyebrow');
+    setText('servicesTitle');
+    setText('servicesNote');
+    setText('experienceEyebrow');
+    setText('experienceTitle');
+    setText('galleryEyebrow');
+    setText('galleryTitle');
+    setText('bookingEyebrow');
+    setText('bookingTitle');
+    setText('minibarEyebrow');
+    setText('minibarTitle');
+    setText('minibarIntro');
+    setText('minibarCardImage');
+
+    const announce = document.querySelector('[data-cms="announce"]');
+    if (announce) {
+      if (site.announceText) announce.innerHTML = site.announceText;
+      if (site.announceHref) announce.href = site.announceHref;
+    }
+    document.querySelectorAll('[data-cms-href="instagram"]').forEach((a) => {
+      if (site.instagram) a.href = site.instagram;
+    });
+  }
+
+  function renderServices(services) {
+    const grid = document.getElementById('services-grid');
+    if (!grid) return;
+    const list = (services || [])
+      .filter((s) => s.active !== false)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+    if (!list.length) return;
+    grid.innerHTML = list
+      .map(
+        (s) => `
+      <article class="service-card" data-service="${escapeAttr(s.name)}">
+        <div class="service-card__image">
+          <img src="${escapeAttr(s.image || '')}" alt="${escapeAttr(s.name)}" loading="lazy">
+        </div>
+        <div class="service-card__overlay">
+          <h3 class="service-card__title">${escapeHtml(s.name)}</h3>
+          <p class="service-card__desc">${escapeHtml(s.description || '')}</p>
+          <p class="service-card__price">${escapeHtml(s.priceLabel || '')}</p>
+          <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
+        </div>
+      </article>`
+      )
+      .join('');
+    // Re-bind agendar buttons
+    grid.querySelectorAll('.agendar-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const card = btn.closest('.service-card');
+        const service = card?.dataset.service;
+        const select = document.getElementById('service');
+        if (service && select) select.value = service;
+      });
+    });
+  }
+
+  function renderGallery(items) {
+    const grid = document.getElementById('gallery-grid');
+    if (!grid || !items || !items.length) return;
+    grid.innerHTML = items
+      .map(
+        (g) => `
+      <div class="gallery-item">
+        <img src="${escapeAttr(g.image || '')}" alt="${escapeAttr(g.alt || '')}" loading="lazy">
+      </div>`
+      )
+      .join('');
+  }
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+  function escapeAttr(str) {
+    return String(str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
+
+  // Apply CMS (defaults immediately, live catalog when available)
+  loadAndApplyCms();
+
+  // ---------- Hero: static image only ----------
   const heroStill = document.getElementById('hero-still');
   if (heroStill) {
     heroStill.classList.remove('is-hidden');

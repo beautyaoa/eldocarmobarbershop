@@ -15,7 +15,7 @@
 </head>
 <body>
   <!-- ========== ANNOUNCEMENT BAR ========== -->
-  <a class="announce-bar" href="https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC" target="_blank" rel="noopener">
+  <a class="announce-bar" data-cms="announce" href="https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC" target="_blank" rel="noopener">
     Já disponível — música <strong>Tá Queimar</strong> 🔥🔥🔥 · Ouvir no YouTube
   </a>
 
@@ -161,13 +161,13 @@
   <!-- ========== HERO ========== -->
   <section class="hero" id="hero">
     <div class="hero__media" aria-hidden="true">
-      <img class="hero__still" id="hero-still" src="assets/images/hero.webp" alt="">
+      <img class="hero__still" id="hero-still" data-cms="heroImage" src="assets/images/hero.webp" alt="">
       <div class="hero__overlay"></div>
     </div>
     <div class="hero__content container">
-      <p class="hero__eyebrow">Luanda · V17 Kilamba</p>
-      <h1 class="hero__title">Chegue.<br>Saia impecável.</h1>
-      <p class="hero__subtitle">Cortes premium, ambiente exclusivo e a experiência Eldo Carmo.</p>
+      <p class="hero__eyebrow" data-cms="heroEyebrow">Luanda · V17 Kilamba</p>
+      <h1 class="hero__title" data-cms="heroTitle">Chegue.<br>Saia impecável.</h1>
+      <p class="hero__subtitle" data-cms="heroSubtitle">Cortes premium, ambiente exclusivo e a experiência Eldo Carmo.</p>
       <div class="hero__ctas">
         <a href="#agendar" class="btn btn--primary">Agendar sessão</a>
         <a href="#servicos" class="btn btn--ghost hero__btn-ghost">Ver Serviços</a>
@@ -183,96 +183,26 @@
   <section class="section section--manifesto" id="manifesto">
     <div class="container">
       <blockquote class="manifesto">
-        <p class="manifesto__quote">O seu estilo, com a precisão que ele merece.</p>
-        <footer class="manifesto__attr">— Eldo Carmo</footer>
+        <p class="manifesto__quote" data-cms="manifestoQuote">O seu estilo, com a precisão que ele merece.</p>
+        <footer class="manifesto__attr" data-cms="manifestoAttr">— Eldo Carmo</footer>
       </blockquote>
     </div>
   </section>
 
-  <!-- ========== SERVICES ========== -->
+  <!-- ========== SERVICES (filled from catalog by main.js) ========== -->
   <section class="section" id="servicos">
     <div class="container">
       <header class="section__header">
-        <p class="section__eyebrow">O que fazemos</p>
-        <h2 class="section__title">Serviços</h2>
+        <p class="section__eyebrow" data-cms="servicesEyebrow">O que fazemos</p>
+        <h2 class="section__title" data-cms="servicesTitle">Serviços</h2>
         <div class="section__line"></div>
       </header>
 
-      <div class="services-grid">
-        <article class="service-card" data-service="Corte Clássico">
-          <div class="service-card__image">
-            <img src="assets/images/service-classico.webp" alt="Corte Clássico" loading="lazy">
-          </div>
-          <div class="service-card__overlay">
-            <h3 class="service-card__title">Corte Clássico</h3>
-            <p class="service-card__desc">Corte tradicional com acabamento preciso e atenção aos detalhes.</p>
-            <p class="service-card__price">A partir de 2.500 Kz</p>
-            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
-          </div>
-        </article>
-
-        <article class="service-card" data-service="Corte + Barba">
-          <div class="service-card__image">
-            <img src="assets/images/service-corte-barba.webp" alt="Corte + Barba" loading="lazy">
-          </div>
-          <div class="service-card__overlay">
-            <h3 class="service-card__title">Corte + Barba</h3>
-            <p class="service-card__desc">Combinação completa para um visual impecável e bem cuidado.</p>
-            <p class="service-card__price">A partir de 4.000 Kz</p>
-            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
-          </div>
-        </article>
-
-        <article class="service-card" data-service="Fade / Degradê">
-          <div class="service-card__image">
-            <img src="assets/images/service-fade.webp" alt="Fade / Degradê" loading="lazy">
-          </div>
-          <div class="service-card__overlay">
-            <h3 class="service-card__title">Fade / Degradê</h3>
-            <p class="service-card__desc">Transições suaves e modernas, do baixo ao médio e alto fade.</p>
-            <p class="service-card__price">A partir de 3.000 Kz</p>
-            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
-          </div>
-        </article>
-
-        <article class="service-card" data-service="Design & Desenhos">
-          <div class="service-card__image">
-            <img src="assets/images/service-design.webp" alt="Design & Desenhos" loading="lazy">
-          </div>
-          <div class="service-card__overlay">
-            <h3 class="service-card__title">Design & Desenhos</h3>
-            <p class="service-card__desc">Linhas, padrões e arte no cabelo com precisão artística.</p>
-            <p class="service-card__price">A partir de 3.000 Kz</p>
-            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
-          </div>
-        </article>
-
-        <article class="service-card" data-service="Tranças & Twists">
-          <div class="service-card__image">
-            <img src="assets/images/service-trancas.webp" alt="Tranças & Twists" loading="lazy">
-          </div>
-          <div class="service-card__overlay">
-            <h3 class="service-card__title">Tranças & Twists</h3>
-            <p class="service-card__desc">Estilos protegidos e elegantes para todas as idades.</p>
-            <p class="service-card__price">Consultar</p>
-            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
-          </div>
-        </article>
-
-        <article class="service-card" data-service="Barboterapia">
-          <div class="service-card__image">
-            <img src="assets/images/service-barba.webp" alt="Barboterapia" loading="lazy">
-          </div>
-          <div class="service-card__overlay">
-            <h3 class="service-card__title">Barboterapia</h3>
-            <p class="service-card__desc">Tratamento completo de barba com toalha quente e produtos premium.</p>
-            <p class="service-card__price">A partir de 2.000 Kz</p>
-            <a href="#agendar" class="btn btn--service agendar-btn">Agendar</a>
-          </div>
-        </article>
+      <div class="services-grid" id="services-grid">
+        <!-- Cards rendered by JS from catalog.services -->
       </div>
 
-      <p class="section__note">* Preços sujeitos a confirmação. Contacte-nos para o valor exacto.</p>
+      <p class="section__note" data-cms="servicesNote">* Preços sujeitos a confirmação. Contacte-nos para o valor exacto.</p>
     </div>
   </section>
 
@@ -280,8 +210,8 @@
   <section class="section section--experience" id="experiencia">
     <div class="container">
       <header class="section__header">
-        <p class="section__eyebrow">Por dentro</p>
-        <h2 class="section__title">A Experiência Eldo Carmo</h2>
+        <p class="section__eyebrow" data-cms="experienceEyebrow">Por dentro</p>
+        <h2 class="section__title" data-cms="experienceTitle">A Experiência Eldo Carmo</h2>
         <div class="section__line"></div>
       </header>
     </div>
@@ -315,6 +245,42 @@
             <p class="experience-card__label">Experiência</p>
           </div>
         </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-barboterapia.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-barboterapia.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Barboterapia</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-estilos.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-estilos.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Estilos</p>
+          </div>
+        </article>
+
+        <article class="experience-card">
+          <video class="experience-card__video" poster="assets/videos/poster-corte.webp" playsinline preload="metadata">
+            <source src="assets/videos/exp-corte.mp4" type="video/mp4">
+          </video>
+          <div class="experience-card__overlay">
+            <button type="button" class="experience-card__play" aria-label="Reproduzir">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <p class="experience-card__label">Corte</p>
+          </div>
+        </article>
       </div>
 
       <button type="button" class="experience-nav experience-nav--next" id="experience-next" aria-label="Seguinte">
@@ -328,14 +294,14 @@
   <section class="section section--alt" id="produtos">
     <div class="container">
       <header class="section__header">
-        <p class="section__eyebrow">No espaço</p>
-        <h2 class="section__title">Mini-Bar</h2>
+        <p class="section__eyebrow" data-cms="minibarEyebrow">No espaço</p>
+        <h2 class="section__title" data-cms="minibarTitle">Mini-Bar</h2>
         <div class="section__line"></div>
-        <p class="section__intro">Snacks, cocktails e bebidas — incluindo Chocolate Scookiie.</p>
+        <p class="section__intro" data-cms="minibarIntro">Snacks, cocktails e bebidas — incluindo Chocolate Scookiie.</p>
       </header>
 
       <a href="minibar.html" class="minibar-card">
-        <img class="minibar-card__img" src="assets/images/minibar-card.webp" alt="Chocolate Scookiie Ginguba — Eldo Carmo Mini-Bar" loading="lazy">
+        <img class="minibar-card__img" data-cms="minibarCardImage" src="assets/images/minibar-card.webp" alt="Chocolate Scookiie Ginguba — Eldo Carmo Mini-Bar" loading="lazy">
         <div class="minibar-card__overlay">
           <span class="minibar-card__eyebrow">Scookiie · Ginguba</span>
           <span class="minibar-card__btn">Ver Mini-Bar</span>
@@ -351,37 +317,17 @@
   <section class="section" id="galeria">
     <div class="container">
       <header class="section__header">
-        <p class="section__eyebrow">Trabalhos</p>
-        <h2 class="section__title">Galeria</h2>
+        <p class="section__eyebrow" data-cms="galleryEyebrow">Trabalhos</p>
+        <h2 class="section__title" data-cms="galleryTitle">Galeria</h2>
         <div class="section__line"></div>
       </header>
 
-      <div class="gallery-grid">
-        <div class="gallery-item">
-          <img src="assets/images/gallery-01.webp" alt="Corte cacheado loiro — Eldo Carmo Barber Shop" loading="lazy">
-        </div>
-        <div class="gallery-item">
-          <img src="assets/images/gallery-02.webp" alt="Fade com cabelo cacheado loiro" loading="lazy">
-        </div>
-        <div class="gallery-item">
-          <img src="assets/images/gallery-03.webp" alt="Corte infantil com design" loading="lazy">
-        </div>
-        <div class="gallery-item">
-          <img src="assets/images/gallery-04.webp" alt="Cliente e barbeiro — agora tu" loading="lazy">
-        </div>
-        <div class="gallery-item">
-          <img src="assets/images/gallery-05.webp" alt="Corte platinado Eldo Carmo" loading="lazy">
-        </div>
-        <div class="gallery-item">
-          <img src="assets/images/gallery-06.webp" alt="Johnny Berry no espaço Eldo Carmo" loading="lazy">
-        </div>
-        <div class="gallery-item">
-          <img src="assets/images/gallery-07.webp" alt="Tranças e acabamento de barba" loading="lazy">
-        </div>
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- Filled from catalog.gallery by main.js -->
       </div>
 
       <div class="section__cta-wrap">
-        <a href="https://www.instagram.com/eldo_carmo/" class="btn btn--ghost" target="_blank" rel="noopener">
+        <a href="https://www.instagram.com/eldo_carmo/" class="btn btn--ghost" data-cms-href="instagram" target="_blank" rel="noopener">
           Ver mais no Instagram
         </a>
       </div>

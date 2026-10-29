@@ -1,6 +1,7 @@
 /**
- * Eldo Carmo Barbershop Mini-Bar — Default catalog (overridden by live Cloudinary catalog.json)
- * Currency: Kz · Orders → Cloudflare Worker → KV → Admin panel
+ * Eldo Carmo Barbershop — Default catalog (overridden by live Cloudinary catalog.json)
+ * Currency: Kz · Orders / bookings → Cloudflare Worker → KV → Admin panel
+ * Staff edit texts, services, gallery & images in Admin → Guardar → Publicar
  */
 
 window.ECBARBER_DEFAULTS = {
@@ -86,6 +87,73 @@ window.ECBARBER_DEFAULTS = {
       order: 6
     }
   ],
+  /* Homepage haircut / barber services (editable in Admin → Serviços) */
+  services: [
+    {
+      id: 'corte-classico',
+      name: 'Corte Clássico',
+      description: 'Corte tradicional com acabamento preciso e atenção aos detalhes.',
+      priceLabel: 'A partir de 2.500 Kz',
+      image: 'assets/images/service-classico.webp',
+      active: true,
+      order: 1
+    },
+    {
+      id: 'corte-barba',
+      name: 'Corte + Barba',
+      description: 'Combinação completa para um visual impecável e bem cuidado.',
+      priceLabel: 'A partir de 4.000 Kz',
+      image: 'assets/images/service-corte-barba.webp',
+      active: true,
+      order: 2
+    },
+    {
+      id: 'fade',
+      name: 'Fade / Degradê',
+      description: 'Transições suaves e modernas, do baixo ao médio e alto fade.',
+      priceLabel: 'A partir de 3.000 Kz',
+      image: 'assets/images/service-fade.webp',
+      active: true,
+      order: 3
+    },
+    {
+      id: 'design',
+      name: 'Design & Desenhos',
+      description: 'Linhas, padrões e arte no cabelo com precisão artística.',
+      priceLabel: 'A partir de 3.000 Kz',
+      image: 'assets/images/service-design.webp',
+      active: true,
+      order: 4
+    },
+    {
+      id: 'trancas',
+      name: 'Tranças & Twists',
+      description: 'Estilos protegidos e elegantes para todas as idades.',
+      priceLabel: 'Consultar',
+      image: 'assets/images/service-trancas.webp',
+      active: true,
+      order: 5
+    },
+    {
+      id: 'barboterapia',
+      name: 'Barboterapia',
+      description: 'Tratamento completo de barba com toalha quente e produtos premium.',
+      priceLabel: 'A partir de 2.000 Kz',
+      image: 'assets/images/service-barba.webp',
+      active: true,
+      order: 6
+    }
+  ],
+  /* Gallery images (Admin → Galeria) */
+  gallery: [
+    { id: 'g1', image: 'assets/images/gallery-01.webp', alt: 'Corte cacheado loiro — Eldo Carmo Barber Shop' },
+    { id: 'g2', image: 'assets/images/gallery-02.webp', alt: 'Fade com cabelo cacheado loiro' },
+    { id: 'g3', image: 'assets/images/gallery-03.webp', alt: 'Corte infantil com design' },
+    { id: 'g4', image: 'assets/images/gallery-04.webp', alt: 'Cliente e barbeiro — agora tu' },
+    { id: 'g5', image: 'assets/images/gallery-05.webp', alt: 'Corte platinado Eldo Carmo' },
+    { id: 'g6', image: 'assets/images/gallery-06.webp', alt: 'Johnny Berry no espaço Eldo Carmo' },
+    { id: 'g7', image: 'assets/images/gallery-07.webp', alt: 'Tranças e acabamento de barba' }
+  ],
   zones: [
     { id: 'v17', name: 'V17 / Maianga', fee: 0, active: true },
     { id: 'ingombota', name: 'Ingombota', fee: 500, active: true },
@@ -100,6 +168,47 @@ window.ECBARBER_DEFAULTS = {
     { id: 'cacuaco', name: 'Cacuaco', fee: 1200, active: true },
     { id: 'outro', name: 'Outra zona de Luanda', fee: 1500, active: true }
   ],
+  /* All public site texts & key images — Admin → Conteúdo */
+  site: {
+    announceText: 'Já disponível — música Tá Queimar 🔥🔥🔥 · Ouvir no YouTube',
+    announceHref: 'https://youtu.be/6vzUPh26JZA?si=xl3FzxXKTsRD6NoC',
+    heroEyebrow: 'Luanda · V17 Kilamba',
+    heroTitle: 'Chegue.\nSaia impecável.',
+    heroSubtitle: 'Cortes premium, ambiente exclusivo e a experiência Eldo Carmo.',
+    heroImage: 'assets/images/hero.webp',
+    manifestoQuote: 'O seu estilo, com a precisão que ele merece.',
+    manifestoAttr: '— Eldo Carmo',
+    servicesEyebrow: 'O que fazemos',
+    servicesTitle: 'Serviços',
+    servicesNote: '* Preços sujeitos a confirmação. Contacte-nos para o valor exacto.',
+    experienceEyebrow: 'Por dentro',
+    experienceTitle: 'A Experiência Eldo Carmo',
+    galleryEyebrow: 'Trabalhos',
+    galleryTitle: 'Galeria',
+    bookingEyebrow: 'Reservas',
+    bookingTitle: 'Agendar corte',
+    minibarEyebrow: 'No espaço',
+    minibarTitle: 'Mini-Bar',
+    minibarIntro: 'Snacks, cocktails e bebidas — incluindo Chocolate Scookiie.',
+    minibarCardImage: 'assets/images/minibar-card.webp',
+    trust1Value: 'V17',
+    trust1Label: 'Kilamba · Luanda',
+    trust2Value: '07–22h',
+    trust2Label: 'Segunda a Domingo',
+    trust3Value: 'Premium',
+    trust3Label: 'Cortes & experiência',
+    trust4Value: '@eldo_carmo',
+    trust4Label: 'Instagram',
+    trust4Href: 'https://www.instagram.com/eldo_carmo/',
+    footerPhone: '930 095 886',
+    footerAddress: 'V17 Kilamba, Luanda',
+    footerHours: 'Seg–Dom · 07h–22h',
+    footerCopy: '© 2026 Eldo Carmo. Todos os direitos reservados.',
+    instagram: 'https://www.instagram.com/eldo_carmo/',
+    facebook: 'https://www.facebook.com/EldoCarmoBeleza',
+    whatsapp: '244930095886',
+    logo: 'assets/images/eldocarmologo.webp'
+  },
   texts: {
     pt: {
       heroTitle: 'Eldo Carmo Mini-Bar',
@@ -126,13 +235,11 @@ window.ECBARBER_DEFAULTS = {
   }
 };
 
-/* ——— Config (public only — secrets live in Worker) ——— */
 window.ECBARBER_CONFIG = {
   cloudName: 'gyssk0cm',
   unsignedPreset: 'ecbarbershop_unsigned',
   catalogFolder: 'ecbarbershop',
   catalogPublicId: 'ecbarbershop/catalog',
-  // Set after Worker is deployed:
   workerUrl: 'https://eldocarmobarbershop-api.beautyaoa.workers.dev',
   get catalogUrl() {
     return `https://res.cloudinary.com/${this.cloudName}/raw/upload/${this.catalogFolder}/catalog.json`;

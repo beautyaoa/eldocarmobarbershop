@@ -15,7 +15,10 @@
     dashboard: 'Painel',
     orders: 'Encomendas',
     bookings: 'Agendamentos',
-    products: 'Produtos',
+    services: 'Serviços',
+    products: 'Mini-Bar',
+    content: 'Conteúdo',
+    gallery: 'Galeria',
     zones: 'Zonas',
     images: 'Imagens'
   };
@@ -27,6 +30,7 @@
   let bookingFilter = 'all';
   let mediaLibrary = [];
   let editingProductId = null;
+  let editingServiceId = null;
   let productSearch = '';
   let dragProductId = null;
 
@@ -150,7 +154,10 @@
       ...base,
       ...remote,
       products: Array.isArray(remote.products) ? remote.products : base.products,
+      services: Array.isArray(remote.services) ? remote.services : base.services,
+      gallery: Array.isArray(remote.gallery) ? remote.gallery : base.gallery,
       zones: Array.isArray(remote.zones) ? remote.zones : base.zones,
+      site: { ...(base.site || {}), ...(remote.site || {}) },
       texts: { ...base.texts, ...(remote.texts || {}) },
       images: { ...base.images, ...(remote.images || {}) }
     };
@@ -989,6 +996,315 @@
     updateDashboard();
   }
 
+  /* ——— Services (homepage cards) ——— */
+  function ensureServices() {
+    if (!Array.isArray(catalog.services)) catalog.services = structuredClone(DEFAULTS.services || []);
+  }
+
+  function renderServicesEditor() {
+    ensureServices();
+    const el = document.getElementById('services-editor');
+    if (!el) return;
+    const list = [...(catalog.services || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
+    el.innerHTML = list
+      .map((s) => {
+        const open = editingServiceId === s.id;
+        return `
+      <div class="product-card ${open ? 'is-editing' : ''}" data-sid="${s.id}">
+        <div class="product-card__row">
+          <img class="product-card__thumb" src="${s.image || ''}" alt="" onerror="this.style.opacity=0.2">
+          <div class="product-card__meta">
+            <strong>${escapeHtml(s.name || 'Sem nome')}</strong>
+            <span>${escapeHtml(s.priceLabel || '')}</span>
+          </div>
+          <label class="switch" title="Activo">
+            <input type="checkbox" data-sfield="active" ${s.active !== false ? 'checked' : ''}>
+          </label>
+          <button type="button" class="tool-btn edit-service">${open ? 'Fechar' : 'Editar'}</button>
+          <button type="button" class="tool-btn tool-btn--danger remove-service">×</button>
+        </div>
+        ${
+          open
+            ? `<div class="product-card__edit">
+            <label>Nome <input type="text" data-sfield="name" value="${escapeAttr(s.name || '')}"></label>
+            <label>Descrição <textarea data-sfield="description" rows="2">${escapeHtml(s.description || '')}</textarea></label>
+            <label>Preço (texto) <input type="text" data-sfield="priceLabel" value="${escapeAttr(s.priceLabel || '')}" placeholder="A partir de 2.500 Kz"></label>
+            <label>Ordem <input type="number" data-sfield="order" value="${s.order || 0}"></label>
+            <div class="image-field">
+              <label>Imagem <input type="text" data-sfield="image" value="${escapeAttr(s.image || '')}"></label>
+              <button type="button" class="tool-btn upload-service-img">Carregar</button>
+              <input type="file" class="service-file" accept="image/*" hidden>
+            </div>
+            ${s.image ? `<img class="preview-img" src="${escapeAttr(s.image)}" alt="">` : ''}
+          </div>`
+            : ''
+        }
+      </div>`;
+      })
+      .join('');
+
+    el.querySelectorAll('.product-card').forEach((card) => {
+      const id = card.dataset.sid;
+      const idx = catalog.services.findIndex((x) => x.id === id);
+      if (idx < 0) return;
+
+      card.querySelector('.edit-service')?.addEventListener('click', () => {
+        editingServiceId = editingServiceId === id ? null : id;
+        renderServicesEditor();
+      });
+      card.querySelector('.remove-service')?.addEventListener('click', () => {
+        if (!confirm('Remover este serviço?')) return;
+        catalog.services.splice(idx, 1);
+        if (editingServiceId === id) editingServiceId = null;
+        renderServicesEditor();
+      });
+      card.querySelectorAll('[data-sfield]').forEach((input) => {
+        input.addEventListener('change', () => {
+          const field = input.dataset.sfield;
+          if (field === 'active') catalog.services[idx].active = input.checked;
+          else if (field === 'order') catalog.services[idx].order = Number(input.value) || 0;
+          else catalog.services[idx][field] = input.value;
+          if (field === 'active' || field === 'name') renderServicesEditor();
+        });
+      });
+      const fileInput = card.querySelector('.service-file');
+      card.querySelector('.upload-service-img')?.addEventListener('click', () => fileInput?.click());
+      fileInput?.addEventListener('change', async () => {
+        const file = fileInput.files?.[0];
+        if (!file) return;
+        try {
+          setStatus('A enviar imagem…');
+          const data = await uploadMedia(file);
+          catalog.services[idx].image = data.secure_url;
+          mediaLibrary.unshift({ url: data.secure_url });
+          setStatus('Imagem actualizada — Guardar / Publicar');
+          renderServicesEditor();
+        } catch (e) {
+          setStatus('Erro no envio: ' + e.message);
+        }
+        fileInput.value = '';
+      });
+    });
+  }
+
+  function addService() {
+    ensureServices();
+    const id = 'svc_' + Date.now();
+    const order =
+      (catalog.services || []).reduce((m, s) => Math.max(m, s.order || 0), 0) + 1;
+    catalog.services.push({
+      id,
+      name: 'Novo serviço',
+      description: '',
+      priceLabel: 'Consultar',
+      image: '',
+      active: true,
+      order
+    });
+    editingServiceId = id;
+    renderServicesEditor();
+  }
+
+  /* ——— Site content editor ——— */
+  function ensureSite() {
+    if (!catalog.site) catalog.site = structuredClone(DEFAULTS.site || {});
+  }
+
+  const CONTENT_FIELDS = [
+    { group: 'Anúncio', fields: [
+      { key: 'announceText', label: 'Texto do anúncio' },
+      { key: 'announceHref', label: 'Link do anúncio' }
+    ]},
+    { group: 'Hero', fields: [
+      { key: 'heroEyebrow', label: 'Linha superior' },
+      { key: 'heroTitle', label: 'Título (use \\n para quebra de linha)', multiline: true },
+      { key: 'heroSubtitle', label: 'Subtítulo', multiline: true },
+      { key: 'heroImage', label: 'Imagem de fundo', image: true }
+    ]},
+    { group: 'Manifesto', fields: [
+      { key: 'manifestoQuote', label: 'Citação', multiline: true },
+      { key: 'manifestoAttr', label: 'Atribuição' }
+    ]},
+    { group: 'Secções', fields: [
+      { key: 'servicesEyebrow', label: 'Serviços — eyebrow' },
+      { key: 'servicesTitle', label: 'Serviços — título' },
+      { key: 'servicesNote', label: 'Serviços — nota' },
+      { key: 'experienceEyebrow', label: 'Experiência — eyebrow' },
+      { key: 'experienceTitle', label: 'Experiência — título' },
+      { key: 'galleryEyebrow', label: 'Galeria — eyebrow' },
+      { key: 'galleryTitle', label: 'Galeria — título' },
+      { key: 'bookingEyebrow', label: 'Agendar — eyebrow' },
+      { key: 'bookingTitle', label: 'Agendar — título' },
+      { key: 'minibarEyebrow', label: 'Mini-Bar — eyebrow' },
+      { key: 'minibarTitle', label: 'Mini-Bar — título' },
+      { key: 'minibarIntro', label: 'Mini-Bar — intro' },
+      { key: 'minibarCardImage', label: 'Mini-Bar — imagem do cartão', image: true }
+    ]},
+    { group: 'Confiança', fields: [
+      { key: 'trust1Value', label: 'Item 1 — valor' },
+      { key: 'trust1Label', label: 'Item 1 — etiqueta' },
+      { key: 'trust2Value', label: 'Item 2 — valor' },
+      { key: 'trust2Label', label: 'Item 2 — etiqueta' },
+      { key: 'trust3Value', label: 'Item 3 — valor' },
+      { key: 'trust3Label', label: 'Item 3 — etiqueta' },
+      { key: 'trust4Value', label: 'Item 4 — valor' },
+      { key: 'trust4Label', label: 'Item 4 — etiqueta' },
+      { key: 'trust4Href', label: 'Item 4 — link' }
+    ]},
+    { group: 'Rodapé & contacto', fields: [
+      { key: 'footerPhone', label: 'Telefone' },
+      { key: 'footerAddress', label: 'Morada' },
+      { key: 'footerHours', label: 'Horário' },
+      { key: 'footerCopy', label: 'Copyright' },
+      { key: 'instagram', label: 'Instagram URL' },
+      { key: 'facebook', label: 'Facebook URL' },
+      { key: 'whatsapp', label: 'WhatsApp (código país + número)' },
+      { key: 'logo', label: 'Logo', image: true }
+    ]}
+  ];
+
+  function renderContentEditor() {
+    ensureSite();
+    const el = document.getElementById('content-editor');
+    if (!el) return;
+    el.innerHTML = CONTENT_FIELDS.map((group) => `
+      <div class="content-group">
+        <h3 class="content-group__title">${group.group}</h3>
+        ${group.fields
+          .map((f) => {
+            const val = catalog.site[f.key] ?? '';
+            if (f.image) {
+              return `<div class="content-field content-field--image">
+                <label>${f.label}
+                  <input type="text" data-ckey="${f.key}" value="${escapeAttr(String(val))}">
+                </label>
+                <button type="button" class="tool-btn upload-content-img" data-ckey="${f.key}">Carregar</button>
+                <input type="file" class="content-file" data-ckey="${f.key}" accept="image/*" hidden>
+                ${val ? `<img class="preview-img" src="${escapeAttr(String(val))}" alt="">` : ''}
+              </div>`;
+            }
+            if (f.multiline) {
+              return `<label class="content-field">${f.label}
+                <textarea data-ckey="${f.key}" rows="2">${escapeHtml(String(val))}</textarea>
+              </label>`;
+            }
+            return `<label class="content-field">${f.label}
+              <input type="text" data-ckey="${f.key}" value="${escapeAttr(String(val))}">
+            </label>`;
+          })
+          .join('')}
+      </div>`).join('');
+
+    el.querySelectorAll('[data-ckey]').forEach((input) => {
+      if (input.type === 'file') return;
+      input.addEventListener('change', () => {
+        catalog.site[input.dataset.ckey] = input.value;
+      });
+    });
+    el.querySelectorAll('.upload-content-img').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        el.querySelector(`.content-file[data-ckey="${btn.dataset.ckey}"]`)?.click();
+      });
+    });
+    el.querySelectorAll('.content-file').forEach((fileInput) => {
+      fileInput.addEventListener('change', async () => {
+        const file = fileInput.files?.[0];
+        if (!file) return;
+        const key = fileInput.dataset.ckey;
+        try {
+          setStatus('A enviar imagem…');
+          const data = await uploadMedia(file);
+          catalog.site[key] = data.secure_url;
+          mediaLibrary.unshift({ url: data.secure_url });
+          setStatus('Imagem actualizada — Guardar / Publicar');
+          renderContentEditor();
+        } catch (e) {
+          setStatus('Erro no envio: ' + e.message);
+        }
+        fileInput.value = '';
+      });
+    });
+  }
+
+  /* ——— Gallery editor ——— */
+  function ensureGallery() {
+    if (!Array.isArray(catalog.gallery)) catalog.gallery = structuredClone(DEFAULTS.gallery || []);
+  }
+
+  function renderGalleryEditor() {
+    ensureGallery();
+    const el = document.getElementById('gallery-editor');
+    if (!el) return;
+    el.innerHTML = (catalog.gallery || [])
+      .map(
+        (g, idx) => `
+      <div class="gallery-edit-card" data-gid="${g.id}">
+        <img src="${escapeAttr(g.image || '')}" alt="" onerror="this.style.opacity=0.2">
+        <label>Alt <input type="text" data-gfield="alt" value="${escapeAttr(g.alt || '')}"></label>
+        <label>URL <input type="text" data-gfield="image" value="${escapeAttr(g.image || '')}"></label>
+        <div class="gallery-edit-actions">
+          <button type="button" class="tool-btn upload-gallery-img">Carregar</button>
+          <input type="file" class="gallery-file" accept="image/*" hidden>
+          <button type="button" class="tool-btn tool-btn--danger remove-gallery">Remover</button>
+        </div>
+      </div>`
+      )
+      .join('');
+
+    el.querySelectorAll('.gallery-edit-card').forEach((card) => {
+      const id = card.dataset.gid;
+      const idx = catalog.gallery.findIndex((x) => x.id === id);
+      if (idx < 0) return;
+      card.querySelectorAll('[data-gfield]').forEach((input) => {
+        input.addEventListener('change', () => {
+          catalog.gallery[idx][input.dataset.gfield] = input.value;
+        });
+      });
+      const fileInput = card.querySelector('.gallery-file');
+      card.querySelector('.upload-gallery-img')?.addEventListener('click', () => fileInput?.click());
+      fileInput?.addEventListener('change', async () => {
+        const file = fileInput.files?.[0];
+        if (!file) return;
+        try {
+          setStatus('A enviar imagem…');
+          const data = await uploadMedia(file);
+          catalog.gallery[idx].image = data.secure_url;
+          mediaLibrary.unshift({ url: data.secure_url });
+          setStatus('Imagem actualizada — Guardar / Publicar');
+          renderGalleryEditor();
+        } catch (e) {
+          setStatus('Erro no envio: ' + e.message);
+        }
+        fileInput.value = '';
+      });
+      card.querySelector('.remove-gallery')?.addEventListener('click', () => {
+        catalog.gallery.splice(idx, 1);
+        renderGalleryEditor();
+      });
+    });
+  }
+
+  function addGalleryItem() {
+    ensureGallery();
+    catalog.gallery.push({
+      id: 'g_' + Date.now(),
+      image: '',
+      alt: ''
+    });
+    renderGalleryEditor();
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+  function escapeAttr(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  }
+
   /* ——— Images upload (unsigned; no vendor name in UI) ——— */
   async function uploadMedia(file) {
     const fd = new FormData();
@@ -1067,6 +1383,11 @@
     if (title) title.textContent = TITLES[tab] || tab;
     if (tab === 'orders' || tab === 'dashboard') loadOrders();
     if (tab === 'bookings' || tab === 'dashboard') loadBookings();
+    if (tab === 'services') renderServicesEditor();
+    if (tab === 'content') renderContentEditor();
+    if (tab === 'gallery') renderGalleryEditor();
+    if (tab === 'products') renderProductsEditor();
+    if (tab === 'zones') renderZonesEditor();
     closeSidebar();
   }
 
@@ -1109,7 +1430,13 @@
 
     setupMedia();
     await loadLiveCatalog();
+    ensureServices();
+    ensureSite();
+    ensureGallery();
     renderProductsEditor();
+    renderServicesEditor();
+    renderContentEditor();
+    renderGalleryEditor();
     renderZonesEditor();
     await loadOrders();
     await loadBookings();
@@ -1120,6 +1447,8 @@
     document.getElementById('btn-refresh-orders')?.addEventListener('click', loadOrders);
     document.getElementById('btn-refresh-bookings')?.addEventListener('click', loadBookings);
     document.getElementById('add-product-btn')?.addEventListener('click', addProduct);
+    document.getElementById('add-service-btn')?.addEventListener('click', addService);
+    document.getElementById('add-gallery-btn')?.addEventListener('click', addGalleryItem);
     document.getElementById('add-zone-btn')?.addEventListener('click', addZone);
 
     const productSearchInput = document.getElementById('product-search');
