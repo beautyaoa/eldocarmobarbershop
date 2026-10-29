@@ -22,7 +22,8 @@ No build step — pure HTML / CSS / JS for Cloudflare Pages.
 |------|---------|
 | `index.html` | Main site: hero, services, experience, Mini-Bar teaser, gallery, Lubango CTA, booking |
 | `minibar.html` | **Eldo Carmo Mini-Bar** — full product catalog (snacks, cocktails & beverages) |
-| `checkout.html` | **Checkout** — order summary + customer details → WhatsApp |
+| `checkout.html` | **Checkout** — order summary → Worker (or WhatsApp fallback) |
+| `admin.html` | **Admin** — products, zones, media, orders |
 
 ---
 
@@ -160,3 +161,40 @@ Push this folder to its own GitHub repo → Cloudflare Pages
 - Dropdown no longer closes while moving the cursor onto a music link
 - Files: `barbershop/css/style.css`, `glamorize/css/style.css`
 
+
+---
+
+## Admin + API (2026-10-29)
+
+Same blueprint as Chocolate Scookiie:
+
+| Piece | Path |
+|-------|------|
+| Admin UI | `admin.html` + `css/admin.css` + `js/admin.js` |
+| Catalog defaults / config | `js/products.js` (`ECBARBER_DEFAULTS` / `ECBARBER_CONFIG`) |
+| Worker API | `worker/` → publish catalog + orders (KV) |
+| Guides | `BLUEPRINT.md`, `ADMIN_GUIDE.md` |
+
+**Cloudinary**
+- Cloud: `gyssk0cm`
+- Unsigned preset (browser media): `ecbarbershop_unsigned`
+- Folder / catalog: `ecbarbershop` → `ecbarbershop/catalog.json`
+- API key + secret → **Worker secrets only** (never frontend / git)
+
+**Deploy Worker**
+```bash
+cd worker
+# Create KV namespace in dashboard, put id in wrangler.toml
+npx wrangler secret put ADMIN_PASSWORD
+npx wrangler secret put CLOUDINARY_CLOUD_NAME   # gyssk0cm
+npx wrangler secret put CLOUDINARY_API_KEY
+npx wrangler secret put CLOUDINARY_API_SECRET
+npx wrangler deploy
+```
+Then set `ECBARBER_CONFIG.workerUrl` in `js/products.js` to the Worker URL.
+
+**Checkout**
+- If `workerUrl` is set → `POST /order` → KV → Admin Encomendas
+- If empty → fallback WhatsApp (current behaviour)
+
+Open `/admin.html` → login → Publicar na loja (creates first `catalog.json`).

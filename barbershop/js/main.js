@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  checkoutForm?.addEventListener('submit', (e) => {
+  checkoutForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (cart.length === 0) return;
 
@@ -393,6 +393,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const phone = document.getElementById('co-phone')?.value.trim() || '';
     const pickup = document.getElementById('co-pickup')?.value || 'levantamento';
     const notes = document.getElementById('co-notes')?.value.trim() || '';
+    const submitBtn = document.getElementById('checkout-submit');
+    const hint = document.querySelector('.checkout-form__hint');
 
     if (!name || !phone) {
       if (!name) document.getElementById('co-name')?.focus();
@@ -401,13 +403,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const pickupLabel =
-      pickup === 'entrega' ? 'Entrega (combinar no WhatsApp)' : 'Levantamento no V17 (Kilamba)';
+      pickup === 'entrega' ? 'Entrega' : 'Levantamento no V17 (Kilamba)';
+    const subtotal = getTotal();
+    const order = {
+      id: 'ord_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+      createdAt: new Date().toISOString(),
+      status: 'pending',
+      customer: { name, phone, address: pickupLabel, notes },
+      zone: pickup === 'entrega' ? { id: 'entrega', name: 'Entrega', fee: 0 } : { id: 'levantamento', name: 'Levantamento', fee: 0 },
+      items: cart.map((i) => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
+      subtotal,
+      deliveryFee: 0,
+      total: subtotal,
+      currency: 'Kz',
+      source: 'minibar'
+    };
 
+    const CONFIG = window.ECBARBER_CONFIG || {};
+    if (CONFIG.workerUrl) {
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'A enviar…';
+      }
+      try {
+        const res = await fetch(CONFIG.workerUrl.replace(/\/$/, '') + '/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(order)
+        });
+        if (!res.ok) throw new Error('Order failed');
+        cart.length = 0;
+        saveCart();
+        renderCart();
+        if (typeof renderCheckoutPage === 'function') renderCheckoutPage();
+        if (hint) hint.textContent = 'Encomenda recebida! Entraremos em contacto em breve.';
+        checkoutForm.reset();
+        setTimeout(() => { window.location.href = 'minibar.html'; }, 1600);
+      } catch (err) {
+        console.error(err);
+        if (hint) hint.textContent = 'Não foi possível enviar. Tente novamente ou use WhatsApp.';
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar pedido';
+        }
+      }
+      return;
+    }
+
+    // Fallback: WhatsApp (until Worker is configured)
     const lines = cart.map(
       (item) => `• ${item.name} × ${item.qty} — ${formatPrice(item.price * item.qty)}`
     );
-    const total = formatPrice(getTotal());
-
+    const total = formatPrice(subtotal);
     let message =
       `Olá! Gostaria de encomendar os seguintes produtos da Eldo Carmo Mini-Bar:\n\n` +
       `${lines.join('\n')}\n\n` +
@@ -415,10 +462,8 @@ document.addEventListener('DOMContentLoaded', () => {
       `Nome: ${name}\n` +
       `Telefone: ${phone}\n` +
       `Entrega: ${pickupLabel}`;
-
     if (notes) message += `\nNotas: ${notes}`;
     message += `\n\nObrigado!`;
-
     window.open(`https://wa.me/244923929074?text=${encodeURIComponent(message)}`, '_blank');
   });
 
