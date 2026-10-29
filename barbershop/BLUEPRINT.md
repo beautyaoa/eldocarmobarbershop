@@ -51,7 +51,7 @@ Kz
 
 **Deploy checklist**  
 - [ ] Create GitHub repo + Cloudflare Pages (root = this folder)  
-- [ ] Create KV namespace · put id in `worker/wrangler.toml`  
+- [ ] Create **dedicated** KV namespace (e.g. `barbershop-orders`) · put id in `worker/wrangler.toml` — do not share with Scookiie or Glamorize  
 - [ ] `npx wrangler secret put ADMIN_PASSWORD` (value: set by owner)  
 - [ ] `npx wrangler secret put CLOUDINARY_CLOUD_NAME` → `gyssk0cm`  
 - [ ] `npx wrangler secret put CLOUDINARY_API_KEY`  
