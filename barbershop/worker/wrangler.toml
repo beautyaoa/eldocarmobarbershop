@@ -6,8 +6,8 @@ preview_urls = true
 
 [[kv_namespaces]]
 binding = "ORDERS"
-id = "637c82d5ba894c4bbc184a4a3aa5a798"
-preview_id = "f0e1d2c3b4a5968778695a4b3c2d1e0f"
+id = "01f6582d1cae46e9821cc71f9c464cfd"
+preview_id = "f2ece009d6cb45439475fffeb995a2e2"
 
 # Secrets (do NOT put values here — use CLI):
 #   npx wrangler secret put ADMIN_PASSWORD
