@@ -29,17 +29,18 @@ No build step — pure HTML / CSS / JS for Cloudflare Pages.
 
 ## Key features
 
-- **Hero sequence** — still photo (5s) → video 1 (full) → video 2 (full) → loop  
-  Dots at bottom indicate 3 slides; clickable to jump
+- **Hero** — static image (`hero.webp`) with overlay and CTAs
+- **Experience** — “A Experiência Eldo Carmo” with Ambiente video (`exp-ambiente.mp4`); more clips can be added later
 - **Client-side cart** (`localStorage`) shared across `index.html`, `minibar.html`, `checkout.html`
   - Quantity **+ / −**
   - **Limpar carrinho**
-  - **Finalizar pedido** → `checkout.html` → WhatsApp (pre-filled → +244 923 929 074)
+  - **Finalizar pedido** → `checkout.html` → Worker / WhatsApp fallback
 - **Checkout** — product images, qty controls, name / phone / pickup / notes
 - **Mini-Bar** — separate page; home shows one clickable lifestyle card (Scookiie)
 - **Booking form** → WhatsApp
 - **Lubango recruitment** CTA → +244 924 071 971
 - Full product images (`object-fit: contain`, no crop)
+- **Admin** — products, zones, media, orders (dedicated KV namespace)
 
 ---
 
@@ -50,13 +51,22 @@ barbershop/
 ├── index.html
 ├── minibar.html
 ├── checkout.html
+├── admin.html
 ├── css/style.css
-├── js/main.js          # hamburger, hero sequence, cart, checkout, forms
+├── css/admin.css
+├── js/main.js          # hamburger, cart, checkout, forms, experience video
+├── js/admin.js
+├── js/products.js
 ├── assets/
 │   ├── icons/          # music platforms (YouTube, Spotify, Apple, Deezer, YT Music)
 │   ├── images/         # logo, hero still, gallery-01…07, services, lubango, minibar
 │   ├── products/       # Scookiie ×3, Água Pura, Coca-Cola, Cuca
-│   └── videos/         # hero.mp4, experience clips + posters
+│   └── videos/         # exp-ambiente.mp4 + posters
+├── worker/
+│   ├── src/index.js
+│   └── wrangler.toml
+├── ADMIN_GUIDE.md
+├── BLUEPRINT.md
 └── README.md
 ```
 
@@ -88,7 +98,7 @@ Push this folder to its own GitHub repo → Cloudflare Pages
 ### 2026-10-05 — Design refresh
 - Typography: Cormorant Garamond (display) + Inter (body) via Google Fonts
 - Header: compact on scroll + Agendar CTA; mobile drawer sticky Agendar
-- Hero: eyebrow, stronger overlay, scroll indicator; sequence still → video 1
+- Hero: eyebrow, stronger overlay, scroll indicator (static image)
 - Manifesto quote section + trust strip before booking
 - Services: display titles, gold price pills, stronger hover lift
 - Experience: larger play control + progress dots
@@ -96,9 +106,10 @@ Push this folder to its own GitHub repo → Cloudflare Pages
 - Section spacing / hierarchy tightened; prefers-reduced-motion respected
 - Files: `index.html`, `minibar.html`, `checkout.html`, `css/style.css`, `js/main.js`
 
-### 2026-10-05 — Remove hero-2
-- Removed second hero video (`hero-video-2` / `hero-2.mp4`) and its dot
-- Hero sequence is now: still 5s → video 1 full → loop
+### 2026-10-29 — Hero & experience videos cleanup
+- Hero is static image only (`hero.webp`) — video files not yet available
+- Experience section keeps only **Ambiente** (`exp-ambiente.mp4`)
+- Removed references to missing videos (hero.mp4, exp-reabertura, exp-corte, exp-transformacao, exp-detalhe, exp-luxo, exp-barba)
 - Files: `index.html`, `js/main.js`
 
 ### 2026-10-05 — Asset cleanup
@@ -110,9 +121,6 @@ Push this folder to its own GitHub repo → Cloudflare Pages
 
 ### 2026-09-29 — Hero media
 - Added `hero.webp` (Johnny + mural) as opening still
-- Added `hero.mp4` (muted, portrait)
-- Sequence: still 5s → video 1 full → loop
-- Hero dots (2) for slide count / navigation
 - Dark gradient overlay for text legibility
 
 ### 2026-09-29 — Mini-Bar page

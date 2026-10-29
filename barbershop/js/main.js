@@ -20,57 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- State ----------
   let cart = JSON.parse(localStorage.getItem('eldocarmo_cart') || '[]');
 
-  // ---------- Hero: still 5s → video 1 full (loop) ----------
+  // ---------- Hero: static image only (video files not yet available) ----------
   const heroStill = document.getElementById('hero-still');
-  const heroVideo1 = document.getElementById('hero-video-1');
-  const heroDots = document.querySelectorAll('.hero__dot');
-  let heroTimer = null;
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const setHeroDot = (i) => {
-    heroDots.forEach((d, idx) => d.classList.toggle('is-active', idx === i));
-  };
-
-  const hideAllHeroMedia = () => {
-    heroStill?.classList.add('is-hidden');
-    if (heroVideo1) {
-      heroVideo1.classList.remove('is-visible');
-      heroVideo1.pause();
-      heroVideo1.currentTime = 0;
-    }
-  };
-
-  const showHeroSlide = (i) => {
-    clearTimeout(heroTimer);
-    hideAllHeroMedia();
-    setHeroDot(i);
-
-    if (i === 0) {
-      heroStill?.classList.remove('is-hidden');
-      if (!prefersReducedMotion) {
-        heroTimer = setTimeout(() => showHeroSlide(1), 5000);
-      }
-    } else if (i === 1 && heroVideo1) {
-      heroVideo1.classList.add('is-visible');
-      heroVideo1.play().catch(() => {});
-    }
-  };
-
-  if (heroStill && heroVideo1) {
-    heroVideo1.addEventListener('ended', () => showHeroSlide(0));
-
-    heroDots.forEach((dot) => {
-      dot.addEventListener('click', () => {
-        const go = parseInt(dot.dataset.heroGo, 10);
-        if (!Number.isNaN(go)) showHeroSlide(go);
-      });
-    });
-
+  if (heroStill) {
     heroStill.classList.remove('is-hidden');
-    setHeroDot(0);
-    if (!prefersReducedMotion) {
-      heroTimer = setTimeout(() => showHeroSlide(1), 5000);
-    }
   }
 
   // ---------- Left menu drawer ----------

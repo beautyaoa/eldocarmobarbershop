@@ -56,14 +56,16 @@ Each folder is a complete, self-contained site intended for its own GitHub repos
 - Direct links to both brand sites
 
 ### Barbershop
-- Hero + services grid (placeholder prices — replace with real ones)
+- Hero (static image) + services grid (placeholder prices — replace with real ones)
+- Experience section (Ambiente video; more clips can be added later)
 - Mini-bar products (Chocolate Scookiie Menta / Ginguba / Ao Leite + drinks & snacks)
 - Fully functional client-side cart (localStorage)
-- Checkout generates a pre-filled WhatsApp message
+- Checkout → Worker / WhatsApp fallback
 - Gallery teaser + Instagram link
 - Lubango recruitment section with dedicated WhatsApp
 - Contact form → WhatsApp
 - Sticky header + elegant mobile menu
+- Staff admin (orders, products, zones) via dedicated Worker + KV
 
 ### Glamorize
 - Hero + services grid
@@ -106,7 +108,7 @@ Also listed: 930 095 886 / 925 184 386 (barbershop secondary)
 - [ ] Real service prices (placeholders currently used — awaiting client confirmation)
 - [x] Barbershop gallery: 7 client-cut photos (`gallery-01` … `gallery-07`)
 - [x] Unused barbershop assets removed (old cuts / interiors / exteriors / chocolate placeholders)
-- [ ] `barbershop/assets/videos/hero-2.mp4` — upload manually to GitHub (required for hero slide 3)
+- [x] Hero is static image; experience section shows Ambiente only (other videos pending)
 - [x] Glamorize gallery expanded with real braiding work + team photo
 - [x] All images converted to WebP, resized & compressed
 - [ ] Final domain confirmation with client
@@ -134,7 +136,7 @@ New product checkout flow. Cart drawer → dedicated page → WhatsApp with cust
 
 ### 2026-10-05 — Barbershop asset cleanup
 
-Removed unused media not referenced by the live pages. Hero still requires `hero-2.mp4` (upload manually to the barbershop repo).
+Removed unused media not referenced by the live pages. Hero is static image only; experience currently uses Ambiente video only.
 
 **Deleted (barbershop)**
 - `assets/images/cuts-beard.webp`, `cuts-braids.webp`, `cuts-curly.webp`, `cuts-kids.webp`, `cuts-styles.webp`
@@ -147,8 +149,8 @@ Removed unused media not referenced by the live pages. Hero still requires `hero
 - `barbershop/README.md`
 - `README.md`
 
-**Action required**
-- Manually add `barbershop/assets/videos/hero-2.mp4` on GitHub (hero sequence: still → hero.mp4 → hero-2.mp4 → loop)
+**Note (2026-10-29)**
+- Hero is static image only. Experience section currently shows only Ambiente (`exp-ambiente.mp4`). Other experience videos can be re-added when available.
 
 ### 2026-09-30 — Mini-Bar header matches homepage
 
@@ -183,9 +185,6 @@ Experience videos: longer full scenes (18–26s each), no loop — play through 
 - `barbershop/css/style.css`
 - `barbershop/index.html` (removed loop on experience videos)
 - `barbershop/assets/videos/exp-ambiente.mp4`
-- `barbershop/assets/videos/exp-corte.mp4`
-- `barbershop/assets/videos/exp-detalhe.mp4`
-- `barbershop/assets/videos/exp-barba.mp4`
 
 **Root**
 - `README.md`
