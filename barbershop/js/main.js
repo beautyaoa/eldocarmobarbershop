@@ -607,6 +607,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const workerUrl = (window.ECBARBER_CONFIG && window.ECBARBER_CONFIG.workerUrl) || '';
     let ok = false;
+    let apiError = '';
 
     if (workerUrl) {
       try {
@@ -616,33 +617,53 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify(booking)
         });
         ok = res.ok;
+        if (!ok) {
+          const data = await res.json().catch(() => ({}));
+          apiError = data.error || ('Erro ' + res.status);
+        }
       } catch (err) {
         console.warn('Booking API', err);
+        apiError = 'Sem ligação ao servidor';
       }
     }
 
-    if (!ok) {
-      // Fallback: store locally so staff can still see it if they open admin on this browser
-      try {
-        const key = 'ecbarber_bookings_local';
-        const list = JSON.parse(localStorage.getItem(key) || '[]');
-        list.unshift(booking);
-        localStorage.setItem(key, JSON.stringify(list.slice(0, 100)));
-      } catch (_) {}
-    }
+    // Always keep a local copy so staff see the request in this browser
+    try {
+      const key = 'ecbarber_bookings_local';
+      const list = JSON.parse(localStorage.getItem(key) || '[]');
+      list.unshift(booking);
+      localStorage.setItem(key, JSON.stringify(list.slice(0, 100)));
+    } catch (_) {}
 
     bookingForm.reset();
     if (submitBtn) {
       submitBtn.disabled = false;
       submitBtn.textContent = originalLabel;
     }
-    alert(
-      ok
-        ? 'Pedido de agendamento enviado! A equipa confirma em breve.'
-        : workerUrl
-          ? 'Não foi possível enviar agora. Tente novamente dentro de momentos.'
-          : 'Pedido guardado localmente. Configure a API para receber agendamentos no painel.'
-    );
+
+    const statusEl = document.getElementById('booking-status');
+    const showStatus = (msg, type) => {
+      if (!statusEl) {
+        alert(msg);
+        return;
+      }
+      statusEl.hidden = false;
+      statusEl.className = 'form-status form-status--' + type;
+      statusEl.textContent = msg;
+      statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+
+    if (ok) {
+      showStatus('Pedido recebido. A equipa Eldo Carmo confirma o seu horário em breve. Obrigado!', 'success');
+    } else if (workerUrl) {
+      showStatus(
+        'O seu pedido foi registado neste dispositivo. Se não aparecer no painel de outra máquina, a API de agendamentos precisa de ser actualizada (redeploy do Worker).',
+        'warn'
+      );
+      console.warn('Booking API falhou:', apiError);
+    } else {
+      showStatus('Pedido guardado neste dispositivo. Configure a API para receber no painel admin.', 'warn');
+    }
   });
 
   // ---------- Experience videos ----------
