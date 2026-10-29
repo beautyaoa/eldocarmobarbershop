@@ -432,8 +432,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ---------- Booking Form → WhatsApp ----------
-  bookingForm?.addEventListener('submit', (e) => {
+  // ---------- Booking Form → Admin API ----------
+  bookingForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const name = document.getElementById('bk-name').value.trim();
     const phone = document.getElementById('bk-phone').value.trim();
@@ -445,21 +445,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!name || !service || !date || !time) return;
 
-    // Format date for display (YYYY-MM-DD → DD/MM/YYYY)
-    const [y, m, d] = date.split('-');
-    const dateFormatted = `${d}/${m}/${y}`;
+    const submitBtn = bookingForm.querySelector('button[type="submit"]');
+    const originalLabel = submitBtn ? submitBtn.textContent : '';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'A enviar…';
+    }
 
-    let text = `Olá! Gostaria de agendar uma sessão na Eldo Carmo Barber Shop.\n\n`;
-    text += `Nome: ${name}\n`;
-    if (phone) text += `Telefone: ${phone}\n`;
-    if (people) text += `Nº de pessoas: ${people}\n`;
-    text += `Serviço: ${service}\n`;
-    text += `Data: ${dateFormatted}\n`;
-    text += `Hora: ${time}\n`;
-    if (message) text += `\nNota: ${message}\n`;
-    text += `\nObrigado!`;
+    const booking = {
+      id: 'bk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
+      type: 'booking',
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      customer: { name, phone: phone || '' },
+      people: people ? Number(people) : null,
+      service,
+      date,
+      time,
+      notes: message || ''
+    };
 
-    window.open(`https://wa.me/244923929074?text=${encodeURIComponent(text)}`, '_blank');
+    const workerUrl = (window.ECBARBER_CONFIG && window.ECBARBER_CONFIG.workerUrl) || '';
+    let ok = false;
+
+    if (workerUrl) {
+      try {
+        const res = await fetch(workerUrl.replace(/\/$/, '') + '/booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(booking)
+        });
+        ok = res.ok;
+      } catch (err) {
+        console.warn('Booking API', err);
+      }
+    }
+
+    if (!ok) {
+      // Fallback: store locally so staff can still see it if they open admin on this browser
+      try {
+        const key = 'ecbarber_bookings_local';
+        const list = JSON.parse(localStorage.getItem(key) || '[]');
+        list.unshift(booking);
+        localStorage.setItem(key, JSON.stringify(list.slice(0, 100)));
+      } catch (_) {}
+    }
+
+    bookingForm.reset();
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
+    alert(
+      ok
+        ? 'Pedido de agendamento enviado! A equipa confirma em breve.'
+        : workerUrl
+          ? 'Não foi possível enviar agora. Tente novamente dentro de momentos.'
+          : 'Pedido guardado localmente. Configure a API para receber agendamentos no painel.'
+    );
   });
 
   // ---------- Experience videos ----------

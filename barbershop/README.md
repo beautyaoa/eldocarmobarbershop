@@ -30,7 +30,7 @@ No build step — pure HTML / CSS / JS for Cloudflare Pages.
 ## Key features
 
 - **Hero** — static image (`hero.webp`) with overlay and CTAs
-- **Experience** — “A Experiência Eldo Carmo” with Ambiente video (`exp-ambiente.mp4`); more clips can be added later
+- **Experience** — “A Experiência Eldo Carmo” with Ambiente + Experiência videos
 - **Client-side cart** (`localStorage`) shared across `index.html`, `minibar.html`, `checkout.html`
   - Quantity **+ / −**
   - **Limpar carrinho**
@@ -61,7 +61,7 @@ barbershop/
 │   ├── icons/          # music platforms (YouTube, Spotify, Apple, Deezer, YT Music)
 │   ├── images/         # logo, hero still, gallery-01…07, services, lubango, minibar
 │   ├── products/       # Scookiie ×3, Água Pura, Coca-Cola, Cuca
-│   └── videos/         # exp-ambiente.mp4 + posters
+│   └── videos/         # exp-ambiente.mp4, exp-experiencia.mp4 + posters
 ├── worker/
 │   ├── src/index.js
 │   └── wrangler.toml
@@ -106,11 +106,11 @@ Push this folder to its own GitHub repo → Cloudflare Pages
 - Section spacing / hierarchy tightened; prefers-reduced-motion respected
 - Files: `index.html`, `minibar.html`, `checkout.html`, `css/style.css`, `js/main.js`
 
-### 2026-10-29 — Hero & experience videos cleanup
-- Hero is static image only (`hero.webp`) — video files not yet available
-- Experience section keeps only **Ambiente** (`exp-ambiente.mp4`)
-- Removed references to missing videos (hero.mp4, exp-reabertura, exp-corte, exp-transformacao, exp-detalhe, exp-luxo, exp-barba)
-- Files: `index.html`, `js/main.js`
+### 2026-10-29 — Hero & experience videos
+- Hero is static image only (`hero.webp`)
+- Experience section: **Ambiente** + **Experiência** (`exp-experiencia.mp4` — full shop vibe, cuts, pedicure, mini-bar)
+- Removed references to missing older clips
+- Files: `index.html`, `js/main.js`, `assets/videos/exp-experiencia.mp4`, `poster-experiencia.webp`
 
 ### 2026-10-05 — Asset cleanup
 - Removed unused images not referenced in HTML/CSS/JS:
